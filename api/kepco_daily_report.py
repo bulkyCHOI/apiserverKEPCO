@@ -29,8 +29,7 @@ def generate_kepco_daily_report():
 
         # Input CSV file path
         # input_csv = "kepcolist_gg.csv"
-        input_csv = "/home/nit/kepco_report/kepcolist_gg.csv"
-
+        input_csv = "kepcolist_gg.csv"
 
         # API URL and static parameters
         url = "https://opm.kepco.co.kr:11080/OpenAPI/getDayLpData.do"
@@ -126,8 +125,13 @@ def generate_kepco_daily_report():
         table_range = f"A1:{chr(65 + len(df.columns) - 1)}{len(df) + 1}"
         table = Table(displayName="DailyReportTable", ref=table_range)
         # Apply table style
-        style = TableStyleInfo(name="TableStyleMedium2", showFirstColumn=False,
-                               showLastColumn=False, showRowStripes=True, showColumnStripes=False)
+        style = TableStyleInfo(
+            name="TableStyleMedium2",
+            showFirstColumn=False,
+            showLastColumn=False,
+            showRowStripes=True,
+            showColumnStripes=False,
+        )
         table.tableStyleInfo = style
         ws.add_table(table)
         wb.save(excel_filename)
@@ -149,7 +153,7 @@ def generate_kepco_15min_report():
         date = today.strftime("%Y%m%d")  # Format as YYYYMMDD
 
         # Input CSV file path
-        input_csv = "/home/nit/kepco_report/kepcolist_gg.csv"
+        input_csv = "kepcolist_gg.csv"
 
         # API URL and static parameters
         url = "https://opm.kepco.co.kr:11080/OpenAPI/getDayLpData.do"
@@ -231,8 +235,13 @@ def generate_kepco_15min_report():
         table_range = f"A1:{chr(65 + len(df.columns) - 1)}{len(df) + 1}"
         table = Table(displayName="Min15ReportTable", ref=table_range)
         # Apply table style
-        style = TableStyleInfo(name="TableStyleMedium2", showFirstColumn=False,
-                               showLastColumn=False, showRowStripes=True, showColumnStripes=False)
+        style = TableStyleInfo(
+            name="TableStyleMedium2",
+            showFirstColumn=False,
+            showLastColumn=False,
+            showRowStripes=True,
+            showColumnStripes=False,
+        )
         table.tableStyleInfo = style
         ws.add_table(table)
         wb.save(excel_filename)
@@ -253,14 +262,16 @@ def send_email_with_attachments(excel_files):
         sender_email = "axgisuljiwontim@gmail.com"
         sender_password = "tjuugdecoipdjdyl"
         # recipient_email = "choi.js@kt.com"  # Replace with actual recipient email
-        recipient_email = ["choi.js@kt.com", "h_w.kim@kt.com"]  # Replace with recipient emails
-
+        recipient_email = [
+            "choi.js@kt.com",
+            "h_w.kim@kt.com",
+        ]  # Replace with recipient emails
 
         # Create email
         msg = MIMEMultipart()
         msg["From"] = sender_email
         # msg["To"] = recipient_email
-        msg['To'] = ", ".join(recipient_email)  # Join recipient emails with comma
+        msg["To"] = ", ".join(recipient_email)  # Join recipient emails with comma
         msg["Subject"] = (
             f"KEPCO 일일 및 15분 간격 보고서 - {datetime.now().strftime('%Y-%m-%d')}"
         )
